@@ -1,0 +1,51 @@
+{% extends 'booking/base.html' %}
+{% block title %}My Bookings | Hotel Booking{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <h1 class="page-title mb-4">My Bookings</h1>
+    {% if bookings %}
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Hotel</th>
+                    <th>Room</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Guests</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.room.hotel.name }}</td>
+                        <td>{{ booking.room.room_type }} {{ booking.room.room_number }}</td>
+                        <td>{{ booking.check_in }}</td>
+                        <td>{{ booking.check_out }}</td>
+                        <td>{{ booking.number_of_guests }}</td>
+                        <td>₹{{ booking.total_amount }}</td>
+                        <td><span class="badge text-bg-secondary">{{ booking.status }}</span></td>
+                        <td>
+                            <a href="{% url 'booking_confirmation' booking.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                            {% if booking.status == 'Confirmed' %}
+                                <form action="{% url 'cancel_booking' booking.id %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button class="btn btn-sm btn-outline-danger" data-confirm-cancel>Cancel Booking</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">You have not made any bookings yet.</div>
+    {% endif %}
+</section>
+{% endblock %}

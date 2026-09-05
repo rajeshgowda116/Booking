@@ -1,0 +1,104 @@
+{% extends 'booking/base.html' %}
+{% block title %}Home | Hotel Booking{% endblock %}
+{% block body_class %}home-page{% endblock %}
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <div class="col-xl-7 col-lg-8">
+                <p class="eyebrow">Discover. Relax. Enjoy.</p>
+                <h1>Find Your Perfect Stay</h1>
+                <p class="lead">Search comfortable hotels, compare rooms, and book your stay with simple date-based availability.</p>
+            </div>
+        </div>
+        <form action="{% url 'hotel_list' %}" method="get" class="hero-search-panel">
+            <div class="search-field search-field-wide">
+                <i class="bi bi-geo-alt"></i>
+                <label>Where are you going?</label>
+                <input type="search" name="q" placeholder="Search by hotel name or location" value="{{ query }}">
+            </div>
+            <div class="search-field">
+                <i class="bi bi-calendar3"></i>
+                <label>Check-in</label>
+                <input type="date" name="check_in">
+            </div>
+            <div class="search-field">
+                <i class="bi bi-calendar3"></i>
+                <label>Check-out</label>
+                <input type="date" name="check_out">
+            </div>
+            <div class="search-field">
+                <i class="bi bi-people"></i>
+                <label>Guests</label>
+                <select name="guests">
+                    <option>1 Guest</option>
+                    <option selected>2 Guests</option>
+                    <option>3 Guests</option>
+                    <option>4 Guests</option>
+                </select>
+            </div>
+            <button class="btn btn-primary hero-search-button" type="submit">Search Hotels <i class="bi bi-arrow-right"></i></button>
+        </form>
+        <div class="hero-benefits">
+            <div><span><i class="bi bi-building-fill-check"></i></span><strong>Best Hotel Deals</strong><small>Save more on your stays</small></div>
+            <div><span><i class="bi bi-shield-check"></i></span><strong>Secure Booking</strong><small>100% safe & trusted</small></div>
+            <div><span><i class="bi bi-headset"></i></span><strong>24/7 Support</strong><small>We're always here for you</small></div>
+        </div>
+    </div>
+</section>
+
+<section class="container featured-section">
+    <div class="section-heading-row">
+        <div>
+            <h2 class="section-title accent-title">Featured Hotels</h2>
+            <p>Handpicked destinations for a perfect stay</p>
+        </div>
+        <a href="{% url 'hotel_list' %}" class="btn btn-outline-primary">View All Hotels <i class="bi bi-arrow-right"></i></a>
+    </div>
+    {% if hotels %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for hotel in hotels %}
+                {% include 'booking/_hotel_card.html' %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">No hotels found. Add sample data or create hotels from Django Admin.</div>
+    {% endif %}
+</section>
+
+<section class="why-section" id="why">
+    <div class="container">
+        <h2 class="section-title accent-title">Why Choose Us?</h2>
+        <p class="section-subtitle">We make your travel experience better</p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 text-center">
+            <div class="col feature-item">
+                <span class="feature-icon blue"><i class="bi bi-gem"></i></span>
+                <h5>Wide Selection</h5>
+                <p>Choose from a variety of hotels and rooms</p>
+            </div>
+            <div class="col feature-item">
+                <span class="feature-icon green"><i class="bi bi-currency-rupee"></i></span>
+                <h5>Best Prices</h5>
+                <p>Get the best deals and offers</p>
+            </div>
+            <div class="col feature-item">
+                <span class="feature-icon red"><i class="bi bi-shield"></i></span>
+                <h5>Safe & Secure</h5>
+                <p>Your information is always protected</p>
+            </div>
+            <div class="col feature-item">
+                <span class="feature-icon gold"><i class="bi bi-headset"></i></span>
+                <h5>24/7 Support</h5>
+                <p>We are here to help you anytime</p>
+            </div>
+        </div>
+        <div class="trip-banner">
+            <div>
+                <h2>Make Your Next Trip Special</h2>
+                <p>Book now and create unforgettable memories at amazing destinations.</p>
+                <a href="{% url 'hotel_list' %}" class="btn btn-light">Explore Hotels <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

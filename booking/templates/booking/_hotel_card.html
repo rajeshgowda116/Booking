@@ -1,0 +1,39 @@
+<div class="col">
+    <div class="card h-100 hotel-card">
+        {% if hotel.image %}
+            <img src="{{ hotel.image.url }}" class="card-img-top" alt="{{ hotel.name }}">
+        {% elif hotel.name == 'Grand Palace Hotel' %}
+            <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="{{ hotel.name }}">
+        {% elif hotel.name == 'Green Valley Resort' %}
+            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="{{ hotel.name }}">
+        {% elif hotel.name == 'Ocean View Hotel' %}
+            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="{{ hotel.name }}">
+        {% else %}
+            <div class="image-placeholder">Hotel Image</div>
+        {% endif %}
+        <span class="rating-badge"><i class="bi bi-star-fill"></i> {{ hotel.rating }}</span>
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ hotel.name }}</h5>
+            <p class="location-line"><i class="bi bi-geo-alt-fill"></i> {{ hotel.location }}</p>
+            <p class="card-text">{{ hotel.description|truncatewords:22 }}</p>
+            <div class="hotel-tags">
+                <span><i class="bi bi-wifi"></i> Free WiFi</span>
+                <span><i class="bi bi-snow"></i> AC</span>
+                {% if hotel.location == 'Mangaluru' %}
+                    <span><i class="bi bi-umbrella"></i> Beach Access</span>
+                {% elif hotel.location == 'Mysuru' %}
+                    <span><i class="bi bi-water"></i> Pool</span>
+                {% else %}
+                    <span><i class="bi bi-cup-hot"></i> Restaurant</span>
+                {% endif %}
+            </div>
+            <div class="hotel-card-footer mt-auto">
+                <div class="price-line">
+                    {% if hotel.min_price %}<strong>₹{{ hotel.min_price|floatformat:0 }}</strong>{% else %}<strong>₹--</strong>{% endif %}
+                    <span>/ night</span>
+                </div>
+                <a href="{% url 'hotel_detail' hotel.id %}" class="btn btn-primary">View Details <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

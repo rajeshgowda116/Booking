@@ -1,0 +1,32 @@
+{% extends 'booking/base.html' %}
+{% block title %}Booking Confirmed | Hotel Booking{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <div class="confirmation-panel">
+        <h1 class="page-title text-success">Booking Confirmed</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <tbody>
+                <tr><th>Booking ID</th><td>{{ booking.id }}</td></tr>
+                <tr><th>Customer Name</th><td>{{ booking.user.get_full_name|default:booking.user.username }}</td></tr>
+                <tr><th>Hotel Name</th><td>{{ booking.room.hotel.name }}</td></tr>
+                <tr><th>Room Type</th><td>{{ booking.room.room_type }}</td></tr>
+                <tr><th>Room Number</th><td>{{ booking.room.room_number }}</td></tr>
+                <tr><th>Check-in Date</th><td>{{ booking.check_in }}</td></tr>
+                <tr><th>Check-out Date</th><td>{{ booking.check_out }}</td></tr>
+                <tr><th>Number of Guests</th><td>{{ booking.number_of_guests }}</td></tr>
+                <tr><th>Number of Nights</th><td>{{ booking.number_of_nights }}</td></tr>
+                <tr><th>Price Per Night</th><td>₹{{ booking.room.price_per_night }}</td></tr>
+                <tr><th>Total Amount</th><td>₹{{ booking.total_amount }}</td></tr>
+                <tr><th>Booking Status</th><td>{{ booking.status }}</td></tr>
+                <tr><th>Booking Date</th><td>{{ booking.booking_date }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'my_bookings' %}" class="btn btn-primary">View My Bookings</a>
+            <a href="{% url 'home' %}" class="btn btn-outline-primary">Back to Home</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'booking/base.html' %}
+{% block title %}Book Room | Hotel Booking{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="booking-summary">
+                <h2>{{ room.hotel.name }}</h2>
+                <p class="text-muted">{{ room.hotel.location }}</p>
+                <p><strong>{{ room.room_type }} Room {{ room.room_number }}</strong></p>
+                <p>Capacity: {{ room.capacity }} guest(s)</p>
+                <p>Price: <strong>₹{{ room.price_per_night }}</strong> per night</p>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <h1 class="page-title">Book Room</h1>
+            <form method="post" class="form-panel" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <button class="btn btn-primary btn-lg">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
