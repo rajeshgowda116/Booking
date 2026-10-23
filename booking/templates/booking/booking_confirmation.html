@@ -3,7 +3,12 @@
 {% block content %}
 <section class="container py-5">
     <div class="confirmation-panel">
-        <h1 class="page-title text-success">Booking Confirmed</h1>
+        <h1 class="page-title text-success mb-4">Booking Confirmed</h1>
+        {% if booking.room.image %}
+            <div class="mb-4">
+                <img src="{{ booking.room.image.url }}" class="rounded img-fluid" alt="{{ booking.room.room_type }}" style="max-height: 260px; width: 100%; object-fit: cover;">
+            </div>
+        {% endif %}
         <div class="table-responsive">
             <table class="table table-bordered align-middle">
                 <tbody>

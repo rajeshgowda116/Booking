@@ -43,6 +43,24 @@ class RegistrationAuthenticationTests(BaseBookingTest):
         self.assertRedirects(response, reverse('home'))
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
+    def test_registration_form_no_help_text(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, '150 characters or fewer')
+        self.assertNotContains(response, 'too similar to your other personal information')
+        self.assertNotContains(response, 'Enter the same password as before')
+
+    def test_password_validation_errors(self):
+        response = self.client.post(reverse('register'), {
+            'username': 'baduser',
+            'email': 'bad@example.com',
+            'password1': '123',
+            'password2': '123',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(User.objects.filter(username='baduser').exists())
+        self.assertContains(response, 'This password is too short')
+
     def test_password_mismatch(self):
         response = self.client.post(reverse('register'), {
             'username': 'baduser',

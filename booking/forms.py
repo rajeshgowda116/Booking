@@ -15,6 +15,7 @@ class RegistrationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.setdefault('class', 'form-control')
+            field.help_text = ''
 
     def clean_email(self):
         email = self.cleaned_data['email']
